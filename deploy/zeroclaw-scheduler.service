@@ -1,0 +1,39 @@
+[Unit]
+Description=ZeroClaw Daily Recreation Scheduler
+After=network.target zeroclaw.service
+Wants=zeroclaw.service
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+WorkingDirectory=/var/www/zeroclaw/current
+ExecStart=/usr/bin/node scripts/scheduler.js
+Restart=on-failure
+RestartSec=30
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=zeroclaw-scheduler
+
+# Environment
+Environment=NODE_ENV=production
+Environment=SITE_DIR=/var/www/zeroclaw/current
+Environment=ARCHIVE_DIR=/var/www/archives
+Environment=TIMEWARP_DIR=/tmp/timewarp
+Environment=LOG_DIR=/var/log/zeroclaw
+Environment=SCHEDULER_PID_FILE=/var/www/zeroclaw/scheduler.pid
+
+# Load env file
+EnvironmentFile=-/var/www/zeroclaw/current/.env.production.local
+
+# Resource limits
+LimitNOFILE=65536
+
+# Security
+NoNewPrivileges=true
+PrivateTmp=false
+ProtectSystem=strict
+ReadWritePaths=/var/www/zeroclaw /var/www/archives /tmp/timewarp /var/log/zeroclaw
+
+[Install]
+WantedBy=multi-user.target

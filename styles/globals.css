@@ -1,0 +1,100 @@
+/* globals.css — Required base styles for every ZeroClaw generated site */
+
+/* ── Reduced Motion Override ──────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .sr-only-transition {
+    transition-duration: 150ms !important;
+  }
+}
+
+/* ── Focus Visible ────────────────────────────────────────────────────────── */
+:focus-visible {
+  outline: 3px solid var(--color-accent, #00ffff);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* ── GPU Compositing Hints ────────────────────────────────────────────────── */
+.will-animate {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* ── Typography Scale (fluid, clamp-based) ────────────────────────────────── */
+:root {
+  --text-xs:   clamp(0.625rem, 1.5vw, 0.75rem);
+  --text-sm:   clamp(0.75rem,  2vw,   0.875rem);
+  --text-base: clamp(0.875rem, 2.5vw, 1rem);
+  --text-lg:   clamp(1rem,     3vw,   1.125rem);
+  --text-xl:   clamp(1.125rem, 3.5vw, 1.25rem);
+  --text-2xl:  clamp(1.25rem,  4vw,   1.5rem);
+  --text-3xl:  clamp(1.5rem,   5vw,   1.875rem);
+  --text-4xl:  clamp(1.875rem, 6vw,   2.25rem);
+  --text-5xl:  clamp(2.25rem,  7vw,   3rem);
+  --text-6xl:  clamp(3rem,     8vw,   3.75rem);
+  --text-7xl:  clamp(3.75rem, 10vw,   4.5rem);
+  --text-8xl:  clamp(4.5rem,  12vw,   6rem);
+  --text-9xl:  clamp(5rem,    14vw,   8rem);
+}
+
+/* ── Smooth Scrolling ─────────────────────────────────────────────────────── */
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+/* ── Base Reset ───────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+img, video { max-width: 100%; height: auto; display: block; }
+
+/* ── Screen-reader only ───────────────────────────────────────────────────── */
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+
+/* ── Weekend Arcade Base ──────────────────────────────────────────────────── */
+.arcade-overlay { position: fixed; inset: 0; background: #050510; z-index: 1000; display: flex; align-items: center; justify-content: center; }
+.arcade-iframe  { width: 100%; height: 100%; border: none; background: transparent; }
+
+/* ── SSE Status ───────────────────────────────────────────────────────────── */
+.sse-connected    { --sse-color: #00ff88; }
+.sse-disconnected { --sse-color: #ff4444; }
+.sse-reconnecting { --sse-color: #ffaa00; }
+.sse-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--sse-color, #888);
+  box-shadow: 0 0 6px var(--sse-color, #888);
+  display: inline-block;
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.5; transform: scale(0.85); }
+}
+
+/* ── Ticket Widget ────────────────────────────────────────────────────────── */
+.ticket-widget {
+  display: flex; align-items: center; gap: 6px;
+  font-family: 'Press Start 2P', monospace; font-size: 10px;
+  color: #ffaa00; text-shadow: 0 0 8px #ffaa00;
+}
